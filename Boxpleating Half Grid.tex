@@ -1,0 +1,42 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0cm,a4paper]{geometry} %global setting. 
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+%The TikZ environment is in cm
+%A0: 84.1 x 118.9
+%A1: 59.4 x 84.1
+%A2: 42.0 x 59.4
+%A3: 29.7 x 42.0
+%A4: 21.0 x 29.7
+\def\AW{21.0} %length in cm of page width, should match geomtry paper size
+\def\AL{29.7} %length in cm of page length, should match geomtry paper size
+\def\gridmargin{1} %page margin size
+\def\printoffset{0.1} %offset from paper margin in cm
+\def\unitsize{4} %spacing between parallel lines in cm
+
+\pgfmathsetmacro{\doubleunit}{2*\unitsize}
+\pgfmathsetmacro{\fourunit}{4*\unitsize}
+\pgfmathsetmacro{\ALL}{2*\AL}
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\clip (\gridmargin-\printoffset,\gridmargin-\printoffset) rectangle (\AW-\gridmargin+\printoffset,\AL-\gridmargin+\printoffset);
+\begin{scope}[shift={(\gridmargin,\gridmargin)}]
+\foreach \y in {0,\unitsize,...,\AL}
+	{\draw[line width = 1pt] (0,\y) -- (\AW,\y);
+	\draw[line width = 1pt] (\y,0) -- (\y,\AL);}
+\foreach \x in {0,\doubleunit,...,\ALL}
+	{\draw[line width = 1pt] (\x,0) -- ({-\AL+\x},\AL);}
+\foreach \x in {0,\doubleunit,...,\AW}
+	{\draw[line width = 1pt] (\x,0) -- ({\x+\AL},\AL);}
+\foreach \x in {-\doubleunit,-\fourunit,...,-\ALL}
+	{\draw[line width = 1pt] (\x,0) -- ({\x+\AL},\AL);}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+\end{document}

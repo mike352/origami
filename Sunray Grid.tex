@@ -1,0 +1,45 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0cm,a0paper]{geometry} %global setting 
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+%The TikZ environment is in cm
+%The geometry package sets the margins
+%A0: 84.1 x 118.9
+%A1: 59.4 x 84.1
+%A2: 42.0 x 59.4
+%A3: 29.7 x 42.0
+%A4: 21.0 x 29.7
+\def\AW{84.1} %length in cm of page width, should match geomtry paper size
+\def\AL{118.9} %length in cm of page length, should match geomtry paper size
+\def\gridmargin{1} %page margin size
+\def\printoffset{0.1} %offset from paper margin in cm
+\def\gridnum{32} %number of rays
+\def\numpleats{9} %total number of pleats
+\def\spacing{7} %spacing of alternate rays in cm, outer ones
+\def\offset{4.5} %initial offset of alternate inner rays in cm
+
+%Total length of ray is paper width minus twice the paper margin
+\pgfmathsetmacro{\raysize}{\AW-2*\gridmargin}
+%The size of the inner pleat spacings is calculated based on spacing and offset
+\pgfmathsetmacro{\innerspacing}{\spacing*(\raysize-\offset)/\raysize} 
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\clip (\gridmargin-\printoffset,\gridmargin-\printoffset) rectangle (\AW-\gridmargin+\printoffset,\AL-\gridmargin+\printoffset);
+\begin{scope}[shift={(\gridmargin,\gridmargin)}]
+\draw (0:\raysize) arc (0:90:\raysize);
+\foreach \y in {0,1,...,\gridnum}
+	{\draw[line width = 1pt] (0,0) -- ({90*\y/\gridnum}:\raysize);}
+\foreach \x in {1,2,...,\numpleats}
+	\foreach \y in {2,4,...,\gridnum}
+	{\draw[line width = 1pt] ({90/\gridnum*(\y-2)}:{\raysize-(\x-1)*\spacing}) -- ({90/\gridnum*(\y-1)}:{\raysize-\offset-(\x-1)*\innerspacing});
+	\draw[line width = 1pt] ({90/\gridnum*\y}:{\raysize-(\x-1)*\spacing}) -- ({90/\gridnum*(\y-1)}:{\raysize-\offset-(\x-1)*\innerspacing});}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+\end{document}

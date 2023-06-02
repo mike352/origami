@@ -1,0 +1,93 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0cm,a3paper]{geometry} %MATCH PAPER SIZE BELOW, landscape optional
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+%The TikZ environment is in cm
+%The geometry package sets the margins
+%Sizes for \AW and \AL (swap for landscape):
+%a0paper: 84.1 x 118.9
+%a1paper: 59.4 x 84.1
+%a2paper: 42.0 x 59.4
+%a3paper: 29.7 x 42.0
+%a4paper: 21.0 x 29.7
+%letterpaper:  21.6 x 27.9
+\def\AW{29.7} %length in cm of page width, **MUST MATCH GEOMETRY PAPER SIZE ABOVE**
+\def\AL{42.0} %length in cm of page length, **MUST MATCH GEOMETRY PAPER SIZE ABOVE**
+\def\gridmargin{1} %page margin size
+\def\printoffset{0.1} %offset from paper margin in cm
+
+\def\qparam{3} %parameter determining the angles: q>1 (required), maybe >2.735 (prevvents overlap of pleats)
+\def\rparam{2} %parameter determining the ratio of the rectangular gaps, it will be 1:\rparam
+\def\vpleatwidth{2} %width of the final vertical pleats 
+\def\hpleatwidth{2} %width of the final horizontal pleats 
+\def\scaleparam{1} %scaling
+
+\pgfmathsetmacro{\hwidth}{(\qparam+\rparam)/(\qparam*\qparam-1)} %width of horizontal trapezoids
+\pgfmathsetmacro{\vwidth}{(\qparam*\rparam+1)/(\qparam*\qparam-1)} %width of vertical trapezoids
+\pgfmathsetmacro{\yunitsize}{2*(\rparam+\hpleatwidth+2*\hwidth)}
+\pgfmathsetmacro{\xunitsize}{2*(1+\vpleatwidth+2*\vwidth)}
+\pgfmathsetmacro{\YMAX}{ceil(\AL/\yunitsize)}
+\pgfmathsetmacro{\XMAX}{ceil(\AW/\xunitsize)}
+
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\clip (\gridmargin-\printoffset,\gridmargin-\printoffset) rectangle (\AW-\gridmargin+\printoffset,\AL-\gridmargin+\printoffset);
+\begin{scope}[shift={(\gridmargin,\gridmargin)}]
+\foreach \y in {0,1,...,\YMAX}{
+	\foreach \x in {0,1,...,\XMAX}{
+		\begin{scope}[scale=\scaleparam,shift={(\x*\xunitsize,\y*\yunitsize)}]{
+		\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
+		\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
+		\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
+		\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+		\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+		\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+		\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+		\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+		\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+		\begin{scope}[xscale=-1,yscale=1,shift={(\vpleatwidth-\xunitsize,0)}]{
+			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
+			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+		}\end{scope}
+		\begin{scope}[xscale=1,yscale=-1,shift={(0,\hpleatwidth-\yunitsize)}]{
+			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
+			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+		}\end{scope}
+		\begin{scope}[xscale=1,yscale=1,shift={(\xunitsize/2,\yunitsize/2)}]{
+			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
+			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
+			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+		}\end{scope}
+		}\end{scope}
+	}
+}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+\end{document}

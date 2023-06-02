@@ -1,0 +1,56 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0cm,a1paper]{geometry} %global setting
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\newcommand{\beq}{\begin{equation}}
+\newcommand{\eeq}{\end{equation}}
+\newcommand{\lb}{\label}
+\newcommand{\beqr}{\begin{eqnarray}}
+\newcommand{\eeqr}{\end{eqnarray}}
+
+\begin{document}
+\hspace{2cm}
+\pgfmathsetmacro{\r}{12}
+\pgfmathsetmacro{\P}{16}
+\pgfmathsetmacro{\x}{0.0903*\r}
+\pgfmathsetmacro{\y}{0.3370*\r}
+\pgfmathsetmacro{\w}{0.0872*\r}
+\pgfmathsetmacro{\h}{0.9659*\r}
+\pgfmathsetmacro{\z}{0.1685*\r}
+\pgfmathsetmacro{\u}{0.3255*\r}
+\pgfmathsetmacro{\v}{0.0234*\r}
+\pgfmathsetmacro{\d}{0.9690867*\r} %Not the d above
+\pgfmathsetmacro{\a}{4.6289166}
+\pgfmathsetmacro{\dd}{0.3022*\r} %This is the d above
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\foreach \t in {0,30,...,359}
+	{\draw[shift={({\w*sin(\t)},-\w*cos(\t))},red] (\t:\r-\v) -- (\t:\r+\P);
+	 \draw[shift={({-\w*sin(\t)},\w*cos(\t))},red] (\t:\r-\v) -- (\t:\r+\P);
+	 \draw[shift={({2*\w*sin(\t)},-2*\w*cos(\t))},blue] (\t:\r-2*\v) -- (\t:\r+\P);
+	 \draw[shift={({-2*\w*sin(\t)},2*\w*cos(\t))},blue] (\t:\r-2*\v) -- (\t:\r+\P);
+	 
+	 \draw[shift={(\t:\r-\u-\v)},blue] (0,0) -- ({\u*cos(\t)+\w*sin(\t)},{\u*sin(\t)-\w*cos(\t)});
+	 \draw[shift={(\t:\r-\u-\v)},blue] (0,0) -- ({\u*cos(\t)-\w*sin(\t)},{\u*sin(\t)+\w*cos(\t)});
+	 \draw[shift={(\t:\r-\u-\v)},red] (0,0) -- ({\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t)},{\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t)});
+	 \draw[shift={(\t:\r-\u-\v)},red] ({\u*cos(\t)+\w*sin(\t)},{\u*sin(\t)-\w*cos(\t)}) -- ({\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t)},{\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t)});
+	 \draw[shift={(\t:\r-\u-\v)},red] (0,0) -- ({-sqrt((\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t))^2+(\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t))^2)*cos(180-\t-30)},{sqrt((\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t))^2+(\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t))^2)*sin(180-\t-30)});
+	 \draw[shift={(\t:\r-\u-\v)},red] ({\u*cos(\t)-\w*sin(\t)},{\u*sin(\t)+\w*cos(\t)}) -- ({-sqrt((\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t))^2+(\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t))^2)*cos(180-\t-30)},{sqrt((\u*cos(\t)+\w*sin(\t)+\x*cos(180-75-\t))^2+(\u*sin(\t)-\w*cos(\t)-\x*sin(180-75-\t))^2)*sin(180-\t-30)});
+	 
+	 \draw[shift={(\t:\r-\v)},red] ({\x*sin(\t)},{-\x*cos(\t)}) -- ({-\x*sin(\t)},{\x*cos(\t)});
+	 \draw[red] (\t+15:\h) -- (\t+15-\a:\d);
+	 \draw[red] (\t-15:\h) -- (\t-15+\a:\d);
+	}
+	
+\draw[blue] (0:\r-\u-\v) \foreach \t in {30,60,...,359} {-- (\t:\r-\u-\v)} -- cycle;
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+
+
+
+\end{document}

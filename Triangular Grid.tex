@@ -1,0 +1,61 @@
+\documentclass{article}
+\usepackage{graphicx}
+\usepackage[margin=0cm,a4paper]{geometry} %global setting
+\usepackage{tikz}
+\usetikzlibrary{calc}
+
+\begin{document}
+%The TikZ environment is in cm
+%The geometry package sets the margins
+%A0: 84.1 x 118.9
+%A1: 59.4 x 84.1
+%A2: 42.0 x 59.4
+%A3: 29.7 x 42.0
+%A4: 21.0 x 29.7
+\def\AW{21.0} %length in cm of page width, should match geometry paper size
+\def\AL{29.7} %length in cm of page length, should match geometry paper size
+\def\gridmargin{1} %page margin size
+\def\printoffset{0.1} %offset from paper margin in cm
+\def\unitsize{2.5} %length in cm of each triangle edge
+
+\pgfmathsetmacro{\doubleunit}{2*\unitsize}
+\pgfmathsetmacro{\spacing}{0.5*sqrt(3)*\unitsize} %space between parallel lines
+\pgfmathsetmacro{\AWW}{3*\AW}
+\pgfmathsetmacro{\ALL}{3*\AL}
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\clip (\gridmargin-\printoffset,\gridmargin-\printoffset) rectangle (\AW-\gridmargin+\printoffset,\AL-\gridmargin+\printoffset);
+\begin{scope}[shift={(\gridmargin,\gridmargin)}]
+\foreach \y in {0,\spacing,...,\AL}
+	{\draw[line width = 1pt] (0,\y) -- (\AW,\y);}
+\foreach \x in {0,\unitsize,...,\AWW}
+	{\draw[line width = 1pt] (\x,0) -- ({\x-\AL/sqrt(3)},\AL);}
+\foreach \x in {0,\unitsize,...,\AW}
+	{\draw[line width = 1pt] (\x,0) -- ({\x+\AL/sqrt(3)},\AL);}
+\foreach \x in {-\unitsize,-\doubleunit,...,-\AWW}
+	{\draw[line width = 1pt] (\x,0) -- ({\x+\AL/sqrt(3)},\AL);}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+\newpage
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\clip (\gridmargin-\printoffset,\gridmargin-\printoffset) rectangle (\AW-\gridmargin+\printoffset,\AL-\gridmargin+\printoffset);
+\begin{scope}[shift={(\gridmargin,\gridmargin)}]
+\foreach \x in {0,\spacing,...,\AW}
+	{\draw[line width = 1pt] (\x,0) -- (\x,\AL);}
+\foreach \y in {0,\unitsize,...,\ALL}
+	{\draw[line width = 1pt] (0,\y) -- (\AW,{\y-\AW/sqrt(3)});}
+\foreach \y in {0,\unitsize,...,\AL}
+	{\draw[line width = 1pt] (0,\y) -- (\AW,{\y+\AW/sqrt(3)});}
+\foreach \y in {-\unitsize,-\doubleunit,...,-\ALL}
+	{\draw[line width = 1pt] (0,\y) -- (\AW,{\y+\AW/sqrt(3)});}
+\end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+\end{document}
