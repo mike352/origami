@@ -18,11 +18,13 @@
 \def\AL{42.0} %length in cm of page length, **MUST MATCH GEOMETRY PAPER SIZE ABOVE**
 \def\gridmargin{1} %page margin size
 \def\printoffset{0.1} %offset from paper margin in cm
+\def\mountain{red}
+\def\valley{blue}
 
-\def\qparam{3} %parameter determining the angles: q>1 (required), maybe >2.735 (prevvents overlap of pleats)
-\def\rparam{2} %parameter determining the ratio of the rectangular gaps, it will be 1:\rparam
+\def\qparam{3} %parameter determining the angles: q>1 (required), maybe >~2.735 (prevvents overlap of pleats)
+\def\rparam{3} %parameter determining the ratio of the rectangular gaps, it will be 1:\rparam
 \def\vpleatwidth{2} %width of the final vertical pleats 
-\def\hpleatwidth{2} %width of the final horizontal pleats 
+\def\hpleatwidth{4} %width of the final horizontal pleats 
 \def\scaleparam{1} %scaling
 
 \pgfmathsetmacro{\hwidth}{(\qparam+\rparam)/(\qparam*\qparam-1)} %width of horizontal trapezoids
@@ -40,52 +42,79 @@
 \foreach \y in {0,1,...,\YMAX}{
 	\foreach \x in {0,1,...,\XMAX}{
 		\begin{scope}[scale=\scaleparam,shift={(\x*\xunitsize,\y*\yunitsize)}]{
-		\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
-		\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
-		\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
-		\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-		\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-		\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
-		\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
-		\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
-		\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+		\draw[line width = 1pt,color=\mountain] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 	(1+2*\vwidth,\hwidth) -- (\vwidth,0);
+		\draw[line width = 1pt,color=\valley] (\vwidth,0) -- (1+2*\vwidth+\vpleatwidth/2,0);
+		\draw[line width = 1pt,color=\mountain] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth+\vpleatwidth/2,\hwidth);
+		\draw[line width = 1pt,color=\mountain] (1+\vwidth,\rparam+2*\hwidth) -- 	(1+\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+		\draw[line width = 1pt,color=\valley] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+		\draw[line width = 1pt,color=\valley] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+		\draw[line width = 1pt,color=\valley] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+		\draw[line width = 1pt,color=\mountain] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+		\draw[line width = 1pt,color=\mountain] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
 		\begin{scope}[xscale=-1,yscale=1,shift={(\vpleatwidth-\xunitsize,0)}]{
-			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
-			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
-			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
-			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\valley] (\vwidth,0) -- (1+2*\vwidth+\vpleatwidth/2,0);
+			\draw[line width = 1pt,color=\mountain] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth+\vpleatwidth/2,\hwidth);
+			\draw[line width = 1pt,color=\mountain] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (1+2*\vwidth,\hwidth) -- 	(1+2*\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\valley] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\mountain] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
 		}\end{scope}
 		\begin{scope}[xscale=1,yscale=-1,shift={(0,\hpleatwidth-\yunitsize)}]{
-			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
-			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
-			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
-			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\valley] (\vwidth,0) -- (1+2*\vwidth+\vpleatwidth/2,0);
+			\draw[line width = 1pt,color=\mountain] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth+\vpleatwidth/2,\hwidth);
+			\draw[line width = 1pt,color=\mountain] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (1+2*\vwidth,\hwidth) -- 	(1+2*\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\valley] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\mountain] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
 		}\end{scope}
 		\begin{scope}[xscale=1,yscale=1,shift={(\xunitsize/2,\yunitsize/2)}]{
-			\draw[line width = 1pt] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- 		(1+2*\vwidth,\hwidth) -- (\vwidth,0);
-			\draw[line width = 1pt] (\vwidth,0) -- (1+\vpleatwidth+2*\vwidth,0);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+\vpleatwidth+2*\vwidth,\hwidth);
-			\draw[line width = 1pt] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+\hpleatwidth+2*\hwidth);
-			\draw[line width = 1pt] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
-			\draw[line width = 1pt] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
-			\draw[line width = 1pt] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\valley] (\vwidth,0) -- (1+2*\vwidth+\vpleatwidth/2,0);
+			\draw[line width = 1pt,color=\mountain] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth+\vpleatwidth/2,\hwidth);
+			\draw[line width = 1pt,color=\mountain] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (1+2*\vwidth,\hwidth) -- 	(1+2*\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+			\draw[line width = 1pt,color=\valley] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+			\draw[line width = 1pt,color=\valley] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+			\draw[line width = 1pt,color=\mountain] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+			\draw[line width = 1pt,color=\mountain] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
 		}\end{scope}
 		}\end{scope}
 	}
 }
 \end{scope}
+\end{tikzpicture}
+\end{center}
+\end{figure*}
+
+\newpage
+
+%Main equations: 1/q = a/(1+b) = b/(r+a), where 1/q = tan(theta), q=\qparam, a=\hwidth, b=\vwidth
+%From equations: a = (q+r)/(q^2-1), b = (q*r+1)/(q^2-1), with q^2-1\neq 0, q*(q^2*r+q*r^2+q+r)\neq 0
+%Alternatively: q = (b+1)/a, r = (-a^2+b^2+b)/a, with a\neq 0, b^2+b \neq 0
+%Alternatively: q = \pm (\sqrt{4a^2+4ar+1}-1)/(2a), b=1/2*(\pm\sqrt{4a^2+4ar+1}-1)
+%Alternatively: q = (r\pm \sqrt{4b^2+4b+r^2})/(2b), a = 1/2*(\pm\sqrt{4b^2+4b+r^2}-r)
+
+\begin{figure*}[htpb]
+\begin{center}
+\begin{tikzpicture}
+\begin{scope}[scale=\scaleparam]{
+\draw[line width = 1pt,color=\mountain] (\vwidth,0) -- (0,\rparam+\hwidth) -- (1+\vwidth,\rparam+2*\hwidth) -- (1+2*\vwidth,\hwidth) -- (\vwidth,0);
+\draw[line width = 1pt,color=\valley] (\vwidth,0) -- (1+2*\vwidth+\vpleatwidth/2,0);
+\draw[line width = 1pt,color=\mountain] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth+\vpleatwidth/2,\hwidth);
+\draw[line width = 1pt,color=\mountain] (1+\vwidth,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+\draw[line width = 1pt,color=\valley] (1+2*\vwidth,\hwidth) -- (1+2*\vwidth,\rparam+2*\hwidth+\hpleatwidth/2);
+\draw[line width = 1pt,color=\valley] (0,-\hpleatwidth/2) -- (0,\rparam+\hwidth);
+\draw[line width = 1pt,color=\valley] (-\vpleatwidth/2,\rparam+2*\hwidth) -- (1+\vwidth,\rparam+2*\hwidth);
+\draw[line width = 1pt,color=\mountain] (\vwidth,-\hpleatwidth/2) -- (\vwidth,0);
+\draw[line width = 1pt,color=\mountain] (-\vpleatwidth/2,\rparam+\hwidth) -- (0,\rparam+\hwidth);
+\draw (0,0) node {(0,0)};
+}\end{scope}
 \end{tikzpicture}
 \end{center}
 \end{figure*}
